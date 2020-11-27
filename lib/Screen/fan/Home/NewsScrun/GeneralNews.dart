@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
+import 'package:master_avtar/Screen/fan/NewsDetails/NewsDetails.dart';
 import 'package:master_avtar/helpers/appBar.dart';
 import 'package:master_avtar/helpers/drawer.dart';
 import 'package:master_avtar/helpers/wdget/boxNwes.dart';
@@ -38,15 +40,21 @@ class _GeneralNewsState extends State<GeneralNews> {
                 );
               })
         ],
-        iconTheme: IconThemeData(
-          color: Color(0xFF6e262c),
-          size: 20,
-        ),
-        // leading: IconButton(
-        //   icon: Icon(Icons.accessible),
-        //   color: Colors.black,
-        //   onPressed: () => Scaffold.of(context).openDrawer(),
+        // iconTheme: IconThemeData(
+        //   color: Color(0xFF6e262c),
+        //   size: 20,
         // ),
+        leading: Builder(
+          builder: (BuildContext context) {
+            return IconButton(
+              icon: Image.asset("assets/icons/appBar.png"),
+              onPressed: () {
+                Scaffold.of(context).openDrawer();
+              },
+              tooltip: MaterialLocalizations.of(context).openAppDrawerTooltip,
+            );
+          },
+        ),
       ),
       drawer: DrawerMenu(),
       body: DefaultTabController(
@@ -117,7 +125,11 @@ class _GeneralNewsState extends State<GeneralNews> {
                                     "انباء عن انطلاق البطوله الدوليه والتي سيشارك"
                                         .substring(0, 35)
                                 : "انباء عن انطلاق البطوله الدوليه والتي سيشارك",
-                            onTap: () {},
+                            onTap: () {
+                              Get.to(
+                                NewsDetails(),
+                              );
+                            },
                           );
                         },
                       ),
@@ -142,7 +154,11 @@ class _GeneralNewsState extends State<GeneralNews> {
                                     "انباء عن انطلاق البطوله الدوليه والتي سيشارك"
                                         .substring(0, 35)
                                 : "انباء عن انطلاق البطوله الدوليه والتي سيشارك",
-                            onTap: () {},
+                            onTap: () {
+                              Get.to(
+                                NewsDetails(),
+                              );
+                            },
                           );
                         },
                       ),
@@ -167,7 +183,11 @@ class _GeneralNewsState extends State<GeneralNews> {
                                     "انباء عن انطلاق البطوله الدوليه والتي سيشارك"
                                         .substring(0, 35)
                                 : "انباء عن انطلاق البطوله الدوليه والتي سيشارك",
-                            onTap: () {},
+                            onTap: () {
+                              Get.to(
+                                NewsDetails(),
+                              );
+                            },
                           );
                         },
                       ),

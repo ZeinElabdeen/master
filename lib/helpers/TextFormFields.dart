@@ -134,9 +134,11 @@ Widget txtField(
       controller: controller,
       onSaved: onSaved,
       enabled: enabled,
+
       //   textAlign: TextAlign.center,
       keyboardType: textInputType,
       obscureText: obscureText,
+
       style: TextStyle(
           fontFamily: AppTheme.boldFont,
           color: AppTheme.primaryColor,
@@ -168,7 +170,7 @@ Widget txtField(
           ),
         ),
         filled: true,
-        fillColor: Colors.transparent,
+        fillColor: Color(0xFFe9e9e9),
         enabled: true,
         labelText: hintText,
         labelStyle: TextStyle(

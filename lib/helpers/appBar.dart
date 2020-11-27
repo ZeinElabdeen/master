@@ -25,7 +25,7 @@ class AppBarScrein extends StatelessWidget {
                 context: context,
                 delegate: DataSearsh(),
               );
-            })
+            }),
       ],
       iconTheme: IconThemeData(
         color: Color(0xFF6e262c),
@@ -42,7 +42,7 @@ class AppBarScrein extends StatelessWidget {
 
 class DataSearsh extends SearchDelegate<String> {
   final citise = [
-    "احمد",
+    "ahmed",
     "خالد",
     "منير احمد",
     "احمد منير",
@@ -81,6 +81,10 @@ class DataSearsh extends SearchDelegate<String> {
   @override
   Widget buildLeading(BuildContext context) {
     return IconButton(
+      alignment: Alignment.center,
+      padding: EdgeInsets.only(
+        top: 25,
+      ),
       icon: AnimatedIcon(
         icon: AnimatedIcons.menu_arrow,
         progress: transitionAnimation,
@@ -98,7 +102,11 @@ class DataSearsh extends SearchDelegate<String> {
       height: MediaQuery.of(context).size.height,
       color: Colors.amber,
       child: Center(
-        child: Text(query),
+        child: Text(query,
+        style: TextStyle(
+          fontSize: 15,
+        ),
+        ),
       ),
     );
   }
@@ -121,15 +129,16 @@ class DataSearsh extends SearchDelegate<String> {
               style: TextStyle(
                 color: Colors.black,
                 fontWeight: FontWeight.bold,
+                fontSize: 15,
               ),
               children: [
-                TextSpan(
-                  text: suggestionLst[index].substring(0, query.length),
-                  style: TextStyle(
-                    color: Colors.grey,
-                    // fontWeight: FontWeight.bold,
-                  ),
-                ),
+                // TextSpan(
+                //   text: suggestionLst[index].substring(0, query.length),
+                //   style: TextStyle(
+                //     color: Colors.amber,
+                //     // fontWeight: FontWeight.bold,
+                //   ),
+                // ),
               ]),
         ),
       ),

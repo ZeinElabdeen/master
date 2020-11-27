@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
+import 'package:get/get.dart';
+import 'package:master_avtar/Screen/fan/PersonalInformation/PersonalInformation.dart';
 
 class UserImg extends StatelessWidget {
   const UserImg({Key key}) : super(key: key);
@@ -86,7 +88,11 @@ class UserImg extends StatelessWidget {
               ),
             ),
             child: InkWell(
-              onTap: () {},
+              onTap: () {
+                Get.to(
+                  PersonalInformation(),
+                );
+              },
               splashColor: Colors.orangeAccent,
               child: Container(
                 padding: const EdgeInsets.fromLTRB(

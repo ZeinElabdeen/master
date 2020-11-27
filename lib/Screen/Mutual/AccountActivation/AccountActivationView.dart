@@ -87,9 +87,7 @@ class _AccountActivationViewState extends State<AccountActivationView> {
         elevation: 0,
         leading: IconButton(
           icon: Icon(
-            translator.currentLanguage == "en"
-                ? Icons.keyboard_arrow_left_rounded
-                : Icons.arrow_right_alt,
+            Icons.arrow_right_alt,
             color: Color(0xFF3f3f3f),
             size: 25,
           ),

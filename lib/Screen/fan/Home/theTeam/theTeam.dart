@@ -36,15 +36,21 @@ class _TheTeamViewState extends State<TheTeamView> {
                 );
               })
         ],
-        iconTheme: IconThemeData(
-          color: Color(0xFF6e262c),
-          size: 20,
-        ),
-        // leading: IconButton(
-        //   icon: Icon(Icons.accessible),
-        //   color: Colors.black,
-        //   onPressed: () => Scaffold.of(context).openDrawer(),
+        // iconTheme: IconThemeData(
+        //   color: Color(0xFF6e262c),
+        //   size: 20,
         // ),
+        leading: Builder(
+          builder: (BuildContext context) {
+            return IconButton(
+              icon: Image.asset("assets/icons/appBar.png"),
+              onPressed: () {
+                Scaffold.of(context).openDrawer();
+              },
+              tooltip: MaterialLocalizations.of(context).openAppDrawerTooltip,
+            );
+          },
+        ),
       ),
       drawer: DrawerMenu(),
       body: DefaultTabController(

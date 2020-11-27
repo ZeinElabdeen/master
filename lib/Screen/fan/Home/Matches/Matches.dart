@@ -37,9 +37,20 @@ class _MatchesViewState extends State<MatchesView> {
                 );
               })
         ],
-        iconTheme: IconThemeData(
-          color: Color(0xFF6e262c),
-          size: 20,
+        // iconTheme: IconThemeData(
+        //   color: Color(0xFF6e262c),
+        //   size: 20,
+        // ),
+        leading: Builder(
+          builder: (BuildContext context) {
+            return IconButton(
+              icon: Image.asset("assets/icons/appBar.png"),
+              onPressed: () {
+                Scaffold.of(context).openDrawer();
+              },
+              tooltip: MaterialLocalizations.of(context).openAppDrawerTooltip,
+            );
+          },
         ),
       ),
       drawer: DrawerMenu(),
