@@ -39,6 +39,7 @@ class _FanRegisterState extends State<FanRegister> {
         child: Container(
           width: MediaQuery.of(context).size.width,
           height: MediaQuery.of(context).size.height,
+
           // padding: EdgeInsets.only(
           //   left: 30,
           //   right: 30,

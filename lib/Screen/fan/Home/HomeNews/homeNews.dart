@@ -1,12 +1,18 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:get/get.dart';
+import 'package:master_avtar/Screen/fan/Home/HomeNews/bloc/all_productsNews.dart';
+import 'package:master_avtar/Screen/fan/Home/HomeNews/bloc/eventsNews.dart';
 import 'package:master_avtar/Screen/fan/NewsDetails/NewsDetails.dart';
 import 'package:master_avtar/Screen/fan/wdget/boxNwes.dart';
 import 'package:master_avtar/Screen/fan/wdget/boxnextGame.dart';
 import 'package:master_avtar/Screen/fan/wdget/swiper.dart';
 import 'package:master_avtar/helpers/appBar.dart';
 import 'package:master_avtar/helpers/drawer.dart';
+import 'package:kiwi/kiwi.dart' as kiwi;
+
+import 'bloc/statesNews.dart';
 
 class HomeNewsView extends StatefulWidget {
   @override
@@ -14,6 +20,20 @@ class HomeNewsView extends StatefulWidget {
 }
 
 class _HomeNewsViewState extends State<HomeNewsView> {
+  GetAllProductsBloc getAllProductsBloc =
+      kiwi.KiwiContainer().resolve<GetAllProductsBloc>();
+  @override
+  void initState() {
+    getAllProductsBloc.add(GetAllProductsEventsStart());
+    super.initState();
+  }
+
+  @override
+  void dispose() {
+    getAllProductsBloc.close();
+    super.dispose();
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -116,6 +136,43 @@ class _HomeNewsViewState extends State<HomeNewsView> {
               );
             },
           ),
+          // BlocBuilder(
+          //   cubit: getAllProductsBloc,
+          //   builder: (context, state) {
+          //     if (state is StartLoading) {
+          //       return Center(
+          //         child: CupertinoActivityIndicator(
+          //           animating: true,
+          //           radius: 30,
+          //         ),
+          //       );
+          //     } else if (state is GetAllProductsStatesSuccess) {
+          //       return state.modelNews.isEmpty
+          //           ? Center(
+          //               child: Text('no data'),
+          //             )
+          //           : ListView.builder(
+          //               itemCount: state.modelNews.length,
+          //               itemBuilder: (context, index) {
+          //                 return BoxImgNwes(
+          //                   img: state.modelNews[index].url,
+          //                   titel: state.modelNews[index].title.length > 35
+          //                       ? "...." +
+          //                           state.modelNews[index].title
+          //                               .substring(0, 35)
+          //                       : state.modelNews[index].title,
+          //                   onTap: () {
+          //                     Get.to(
+          //                       NewsDetails(),
+          //                     );
+          //                   },
+          //                 );
+          //               });
+          //     } else {
+          //       return Container();
+          //     }
+          //   },
+          // ),
           SizedBox(
             height: 30,
           ),

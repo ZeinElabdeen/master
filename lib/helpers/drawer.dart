@@ -1,4 +1,6 @@
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:get/get.dart';
 import 'package:master_avtar/Screen/fan/Home/ConnectUs/ConnectUs.dart';
@@ -11,7 +13,43 @@ import 'package:master_avtar/Screen/fan/Home/sfficial%D9%8D%D9%8DSponsor/Sfficia
 import 'package:master_avtar/helpers/user.dart';
 import 'package:master_avtar/helpers/wdget/customListTile.dart';
 
+import 'app_theme.dart';
+
 class DrawerMenu extends StatelessWidget {
+  void _popupDialog(BuildContext context) {
+    showDialog(
+        context: context,
+        builder: (context) {
+          return CupertinoAlertDialog(
+            content: Text(
+              "هل تريد الخروج من التطبيق",
+              style: TextStyle(
+                fontSize: 16,
+                fontWeight: FontWeight.w700,
+                color: AppTheme.primaryColor,
+              ),
+            ),
+            actions: <Widget>[
+              FlatButton(
+                onPressed: () => Navigator.of(context).pop(false),
+                child: Text(
+                  "لا",
+                  style: TextStyle(color: AppTheme.secondaryColor),
+                ),
+              ),
+              FlatButton(
+                onPressed: () =>
+                    SystemChannels.platform.invokeMethod('SystemNavigator.pop'),
+                child: Text(
+                  "نعم",
+                  style: TextStyle(color: AppTheme.secondaryColor),
+                ),
+              ),
+            ],
+          );
+        });
+  }
+
   @override
   Widget build(BuildContext context) {
     return Drawer(
@@ -82,7 +120,14 @@ class DrawerMenu extends StatelessWidget {
             icons: FontAwesomeIcons.envelopeOpen,
           ),
           CustomListTile(
-            onTap: () {},
+            onTap: () {
+              // print(_onBackPressed);
+              // context = null;
+              // _onBackPressed();
+              _popupDialog(context);
+            },
+            // onTap: () => _onBackPressed(),
+            // onTap: () async => await _onBackPressed(),
             tit: "تسجيل الخروج",
             icons: FontAwesomeIcons.signOutAlt,
           ),

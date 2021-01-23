@@ -4,7 +4,6 @@ import 'package:dio/dio.dart';
 import 'package:flutter/foundation.dart';
 import 'package:quick_log/quick_log.dart';
 
-// url
 const String BASE_URL = "";
 
 class ServerGate {

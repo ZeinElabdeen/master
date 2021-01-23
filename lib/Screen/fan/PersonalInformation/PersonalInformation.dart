@@ -1,5 +1,4 @@
 import 'dart:io';
-import 'dart:async';
 import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:master_avtar/helpers/appBar.dart';
@@ -21,6 +20,13 @@ class _PersonalInformationState extends State<PersonalInformation> {
 
   void open_gallery() async {
     var image = await ImagePicker.pickImage(source: ImageSource.gallery);
+    setState(() {
+      _image = image;
+    });
+  }
+
+  void open_camera() async {
+    var image = await ImagePicker.pickImage(source: ImageSource.camera);
     setState(() {
       _image = image;
     });
@@ -70,29 +76,80 @@ class _PersonalInformationState extends State<PersonalInformation> {
         ),
       ),
       drawer: DrawerMenu(),
-      body: Container(
-        alignment: Alignment.center,
-        child: Center(
-          child: Container(
+      body: ListView(
+        children: [
+          Container(
             alignment: Alignment.center,
-            padding: EdgeInsets.all(25),
-            color: Colors.black12,
-            height: 180.0,
-            width: 180.0,
-            child: Stack(
-              alignment: Alignment.center,
-              children: [
-                _image == null ? Text("Still waiting!") : Image.file(_image),
-                IconButton(
-                  icon: Image.asset("assets/icons/file.png"),
-                  onPressed: () {
-                    open_gallery();
-                  },
+            padding: EdgeInsets.only(
+              top: 40,
+            ),
+            child: Center(
+              child: Container(
+                alignment: Alignment.center,
+                padding: EdgeInsets.all(10),
+                height: 130.0,
+                width: 130.0,
+                child: Stack(
+                  alignment: Alignment.center,
+                  children: [
+                    Container(
+                      width: MediaQuery.of(context).size.width,
+                      height: MediaQuery.of(context).size.height,
+                      child: ClipRRect(
+                        borderRadius: BorderRadius.only(
+                          topRight: Radius.circular(100),
+                          topLeft: Radius.circular(100),
+                          bottomLeft: Radius.circular(100),
+                          bottomRight: Radius.circular(100),
+                        ),
+                        child: _image == null
+                            ? Image.asset(
+                                "assets/icons/file.png",
+                                fit: BoxFit.cover,
+                              )
+                            : Image.file(
+                                _image,
+                                fit: BoxFit.cover,
+                              ),
+                      ),
+                    ),
+                    FloatingActionButton(
+                      onPressed: () {
+                        showModalBottomSheet(
+                            context: context,
+                            builder: (BuildContext context) {
+                              return SafeArea(
+                                child: Column(
+                                  mainAxisSize: MainAxisSize.min,
+                                  children: [
+                                    ListTile(
+                                      leading: Icon(Icons.camera),
+                                      title: Text('Camera'),
+                                      onTap: () {
+                                        open_camera();
+                                      },
+                                    ),
+                                    ListTile(
+                                      leading: Icon(Icons.image),
+                                      title: Text('Gallery'),
+                                      onTap: () {
+                                        open_gallery();
+                                      },
+                                    ),
+                                  ],
+                                ),
+                              );
+                            });
+                      },
+                      tooltip: 'New Image',
+                      child: Image.asset("assets/icons/file.png"),
+                    ),
+                  ],
                 ),
-              ],
+              ),
             ),
           ),
-        ),
+        ],
       ),
       // floatingActionButton: FloatingActionButton(
       //   onPressed: () {

@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:master_avtar/Screen/LoginType/LoginTypeView.dart';
 import 'package:master_avtar/Screen/fan/Auth/register/singup.dart';
+import 'package:master_avtar/Screen/fan/Auth/sing/bloc/login_events.dart';
 import 'package:master_avtar/Screen/fan/Home/fanHome.dart';
 import 'package:master_avtar/helpers/AlreadyHaveAccount.dart';
 import 'package:master_avtar/helpers/Btns.dart';
@@ -9,6 +10,9 @@ import 'package:master_avtar/helpers/Loaders.dart';
 import 'package:master_avtar/helpers/TextFormFields.dart';
 import 'package:master_avtar/helpers/app_theme.dart';
 import 'package:master_avtar/helpers/navotton.dart';
+import 'package:kiwi/kiwi.dart' as kiwi;
+import 'package:toast/toast.dart';
+import 'bloc/login_bloc.dart';
 
 class FanSingIn extends StatefulWidget {
   @override
@@ -16,6 +20,65 @@ class FanSingIn extends StatefulWidget {
 }
 
 class _FanSingInState extends State<FanSingIn> {
+  String userPhon;
+
+  String userPassword;
+
+  // LoginBloc _loginBloc = kiwi.KiwiContainer().resolve<LoginBloc>();
+  LoginBloc _clientSignInController = LoginBloc();
+
+  @override
+  void dispose() {
+    _clientSignInController.close();
+    super.dispose();
+  }
+
+  GlobalKey<FormState> _formKey = GlobalKey<FormState>();
+
+  void _submit(BuildContext context) {
+    if (!_formKey.currentState.validate())
+      return;
+    else {
+      _formKey.currentState.save();
+      setState(() {
+        _loading = true;
+      });
+      _clientSignInController
+          .sendLoginData(
+        phone: userPhon,
+        password: userPassword,
+      )
+          .then((response) {
+        print(response.response.toString() + "<<<<<<<<<<<<<<<   responde");
+        print(response.statusCode.toString() + "<<<<<<<<<<<<<<<   responde");
+        if (response.success) {
+          setState(() {
+            _loading = false;
+          });
+          Get.to(
+            FanHomeView(),
+          );
+        } else {
+          setState(() {
+            _loading = false;
+          });
+          if (response.errType == 1) {
+            // error from server
+            print(response.error.toString());
+            if (response.statusCode == 401 || response.statusCode == 422) {
+              Toast.show(response.error['message'], context,
+                  gravity: Toast.CENTER, duration: Toast.LENGTH_LONG);
+            }
+          } else {
+            // other error
+            Toast.show(response.error['message'], context,
+                gravity: Toast.CENTER, duration: Toast.LENGTH_LONG);
+          }
+        }
+      });
+    }
+  }
+
   bool _loading = false;
   @override
   Widget build(BuildContext context) {
@@ -37,6 +100,7 @@ class _FanSingInState extends State<FanSingIn> {
         ),
       ),
       body: Form(
+        key: _formKey,
         child: Container(
           width: MediaQuery.of(context).size.width,
           height: MediaQuery.of(context).size.height,
@@ -117,7 +181,9 @@ class _FanSingInState extends State<FanSingIn> {
                             return null;
                         },
                         onSaved: (String val) {
-                          setState(() {});
+                          setState(() {
+                            userPhon = val;
+                          });
                         },
                         obscureText: false,
                         // prefix: "assets/icons/phone.png",
@@ -134,7 +200,9 @@ class _FanSingInState extends State<FanSingIn> {
                             return null;
                         },
                         onSaved: (String val) {
-                          setState(() {});
+                          setState(() {
+                            userPassword = val;
+                          });
                         },
                         controller: null,
                         textInputType: TextInputType.visiblePassword,
@@ -155,9 +223,7 @@ class _FanSingInState extends State<FanSingIn> {
                       _loading
                           ? authLoader()
                           : btn(context, "تسجيل الدخوال", () {
-                              Get.to(
-                                FanHomeView(),
-                              );
+                              _submit(context);
                             }),
                       btnB(context, "تسجيل حساب جديد", () {
                         Get.to(
